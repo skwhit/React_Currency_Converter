@@ -3,6 +3,7 @@ import React from 'react'
 export default function CurrencyRow(props) {
 const {
     currencyOptions,
+    currencyTypes,
     selectedCurrency,
     onChangeCurrency,
     onChangeAmount,
@@ -13,7 +14,7 @@ const {
         <input type="number" className="input" value={amount} onChange={onChangeAmount}/>
         <select value={selectedCurrency} onChange={onChangeCurrency}>
         {currencyOptions.map(option =>(
-            <option key={option} value={option}>{option}</option>
+            <option key={option} value={option}>{currencyTypes[currencyOptions.indexOf(option)]}</option>
         ))}
             
         </select>
