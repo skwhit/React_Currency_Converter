@@ -17,7 +17,7 @@ function App() {
 
   let toAmount, fromAmount;
   let initFetch;
-  let currencyList = [];
+  let currencys = [];
   const filteredCodes = [];
 
   if (amountInFromCurrency) {
@@ -29,42 +29,41 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(BASE_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        const firstCurrency = Object.keys(data.rates)[0];
+    fetchData();
+    async function fetchData() {
+      const result = await fetch(BASE_URL);
+      const data = await result.json();
 
-        const currencyKeys = [...Object.keys(data.rates)];
-        console.log(currencyKeys.length)
-        let matchedCodeNumbers = CurrencyCodes.map((e) => {
-          if (currencyKeys.includes(e)) {
-            return CurrencyCodes.indexOf(e);
-          } else {
-            return "";
-          }
-        });
-        matchedCodeNumbers = matchedCodeNumbers.filter((e) => e !== "");
-        for (let number of matchedCodeNumbers) {
-          currencyList.push(
-            `${CurrencyCodes[number]} - ${CurrencyNames[number]}`
-          );
-          filteredCodes.push(CurrencyCodes[number])
+      console.log(data);
+      const firstCurrency = Object.keys(data.rates)[0];
+
+      const currencyKeys = [...Object.keys(data.rates)];
+      console.log(currencyKeys.length);
+      let matchedCodeNumbers = CurrencyCodes.map((e) => {
+        if (currencyKeys.includes(e)) {
+          return CurrencyCodes.indexOf(e);
         }
-        console.log(matchedCodeNumbers);
-        console.log(currencyList);
-        console.log(filteredCodes);
-        console.log(currencyOptions);
+        return null;
+      });
+      matchedCodeNumbers = matchedCodeNumbers.filter((e) => e !== null);
+      if (initFetch != true) {
+        for (let number of matchedCodeNumbers) {
+          currencys.push(`${CurrencyCodes[number]} - ${CurrencyNames[number]}`);
+          filteredCodes.push(CurrencyCodes[number]);
+        }
+      }
 
-        setCurrencyOptions([...filteredCodes]);
-        setCurrencyTypes([...currencyList])
-        setFromCurrency(data.base);
-        setExchangeRate(data.rates[firstCurrency]);
-        console.log(exchangeRate);
-        setToCurrency(firstCurrency);
-        initFetch = true;
-      })
-      .catch((error) => console.log(error));
+      console.log(matchedCodeNumbers);
+      console.log(currencys);
+      console.log(filteredCodes);
+
+      setCurrencyOptions([...filteredCodes]);
+      setCurrencyTypes([...currencys]);
+      setFromCurrency(data.base);
+      setExchangeRate(data.rates[firstCurrency]);
+      setToCurrency(firstCurrency);
+      initFetch = true;
+    }
   }, []);
 
   useEffect(() => {
@@ -96,24 +95,26 @@ function App() {
 
   return (
     <>
-      <h1>Convert</h1>
-      <CurrencyRow
-        currencyOptions={currencyOptions}
-        currencyTypes={currencyTypes}
-        selectedCurrency={fromCurrency}
-        onChangeCurrency={(e) => setFromCurrency(e.target.value)}
-        onChangeAmount={handleFromAmountChange}
-        amount={fromAmount}
-      />
-      <div className="equals">=</div>
-      <CurrencyRow
-        currencyOptions={currencyOptions}
-        currencyTypes={currencyTypes}
-        selectedCurrency={toCurrency}
-        onChangeCurrency={(e) => setToCurrency(e.target.value)}
-        onChangeAmount={handleToAmountChange}
-        amount={toAmount}
-      />
+      <h1>Convert Currency</h1>
+        <div className="convertContainer">
+          <CurrencyRow
+            currencyOptions={currencyOptions}
+            currencyTypes={currencyTypes}
+            selectedCurrency={fromCurrency}
+            onChangeCurrency={(e) => setFromCurrency(e.target.value)}
+            onChangeAmount={handleFromAmountChange}
+            amount={fromAmount}
+          />
+          <div className="equals">=</div>
+          <CurrencyRow
+            currencyOptions={currencyOptions}
+            currencyTypes={currencyTypes}
+            selectedCurrency={toCurrency}
+            onChangeCurrency={(e) => setToCurrency(e.target.value)}
+            onChangeAmount={handleToAmountChange}
+            amount={toAmount}
+          />
+        </div>
     </>
   );
 }

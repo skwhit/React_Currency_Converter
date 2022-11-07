@@ -1,5 +1,9 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
+}
+
+body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,32 +13,59 @@ body {
 }
 
 h1 {
+  position: absolute;
+  top: 15vh;
   margin: 0;
+  width: 100vw;
   margin-bottom: .5rem;
   font-size: 2.5rem;
 }
 
+.convertContainer {
+  display: flex;
+  width: 100vw;
+  max-width: 1920px;
+}
+
+.currencyRow {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .input {
   border: 1px solid #333;
-  border-radius: .3rem;
+  border-radius: 0 0 .3rem .3rem;
   padding: .25rem;
-  width: 7em;
   font-size: 2rem;
+  width: 80%;
 }
 
 select {
-  margin-left: .5rem;
-  font-size: 2rem;
+  /* margin-left: .5rem; */
+  font-size: 1.3rem;
   /* appearance: none; */
-        outline: 0;
-        background: rgb(51, 148, 245);
-        background-image: none;
-        width: 100%;
-        height: 100%;
-        color: black;
-        cursor: pointer;
-        border: 1px solid black;
-        border-radius: 3px;
+  outline: 0;
+  background: rgb(51, 148, 245);
+  background-image: none;
+  width: 80%;
+  height: 100%;
+  color: black;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 3px 3px 0 0;
+  overflow: wrap;
+  padding: 5px;
+  text-overflow: ellipsis;
+
+}
+
+.currency {
+  width: 500px;
+  overflow-wrap: break-word;
+  overflow: hidden;
+
 }
 
 .equals {
