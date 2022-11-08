@@ -3,7 +3,7 @@ import "./App.css";
 import CurrencyRow from "./CurrencyRow";
 import { CurrencyCodes, CurrencyNames } from "./CurrencyData";
 //AgspuRm9FLurPOykoj2tOum77tNFlCMe
-console.clear();
+// console.clear();
 const BASE_URL = "https://api.exchangerate.host/latest";
 
 function App() {
@@ -34,11 +34,11 @@ function App() {
       const result = await fetch(BASE_URL);
       const data = await result.json();
 
-      console.log(data);
+      // console.log(data);
       const firstCurrency = Object.keys(data.rates)[0];
 
       const currencyKeys = [...Object.keys(data.rates)];
-      console.log(currencyKeys.length);
+      // console.log(currencyKeys.length);
       let matchedCodeNumbers = CurrencyCodes.map((e) => {
         if (currencyKeys.includes(e)) {
           return CurrencyCodes.indexOf(e);
@@ -51,11 +51,13 @@ function App() {
           currencys.push(`${CurrencyCodes[number]} - ${CurrencyNames[number]}`);
           filteredCodes.push(CurrencyCodes[number]);
         }
+        currencys.sort();
+        filteredCodes.sort();
       }
 
-      console.log(matchedCodeNumbers);
-      console.log(currencys);
-      console.log(filteredCodes);
+      // console.log(matchedCodeNumbers);
+      // console.log(currencys);
+      // console.log(filteredCodes);
 
       setCurrencyOptions([...filteredCodes]);
       setCurrencyTypes([...currencys]);
@@ -67,16 +69,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(fromCurrency, toCurrency);
+    // console.log(fromCurrency, toCurrency);
     if (fromCurrency != undefined && toCurrency != undefined) {
       fetch(
         `https://api.exchangerate.host/convert?from=${fromCurrency}&to=${toCurrency}`
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setExchangeRate(data.result);
-          console.log(exchangeRate);
+          // console.log(exchangeRate);
         });
 
       // setExchangeRate(data.rates[toCurrency])
@@ -98,7 +100,7 @@ function App() {
       <h1>Convert Currency</h1>
         <div className="convertContainer">
           <CurrencyRow
-            className="firstRow"
+            className={"firstRow"}
             currencyOptions={currencyOptions}
             currencyTypes={currencyTypes}
             selectedCurrency={fromCurrency}
@@ -106,9 +108,9 @@ function App() {
             onChangeAmount={handleFromAmountChange}
             amount={fromAmount}
           />
-          <div className="equals"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+          <div className="equals"><i className="fa-solid fa-arrow-right-arrow-left"></i></div>
           <CurrencyRow
-            className="secondRow"
+            className={"secondRow"}
             currencyOptions={currencyOptions}
             currencyTypes={currencyTypes}
             selectedCurrency={toCurrency}
