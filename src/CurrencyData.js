@@ -20,7 +20,7 @@ const CurrencyList = {
     "BTN": "Bhutanese Ngultrum",
     "BTC": "Bitcoin",
     "BOB": "Bolivian Boliviano",
-    "BAM": "Bosnia-Herzegovina Convertible Mark",
+    "BAM": "Bosnia-Herzegovina Mark",
     "BWP": "Botswanan Pula",
     "BRL": "Brazilian Real",
     "GBP": "British Pound Sterling",
