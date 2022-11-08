@@ -10,8 +10,9 @@ body {
   align-items: center;
   min-height: 100vh;
   text-align: center;
-  background-color: #d1def4;
+  background-color: #bac0cf;
   overflow-x: hidden;
+  box-shadow: inset 0px 0px 30px black;
 }
 
 h1 {
