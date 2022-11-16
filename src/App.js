@@ -14,6 +14,7 @@ function App() {
   const [exchangeRate, setExchangeRate] = useState();
   const [amount, setAmount] = useState(1);
   const [amountInFromCurrency, setAmountInFromCurrency] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   let toAmount, fromAmount;
   let initFetch;
@@ -29,6 +30,7 @@ function App() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     fetchData();
     async function fetchData() {
       const result = await fetch(BASE_URL);
@@ -64,11 +66,13 @@ function App() {
       setFromCurrency(data.base);
       setExchangeRate(data.rates[firstCurrency]);
       setToCurrency(firstCurrency);
+      setIsLoading(false);
       initFetch = true;
     }
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     // console.log(fromCurrency, toCurrency);
     if (fromCurrency != undefined && toCurrency != undefined) {
       fetch(
@@ -79,6 +83,7 @@ function App() {
           // console.log(data);
           setExchangeRate(data.result);
           // console.log(exchangeRate);
+          setIsLoading(false);
         });
 
       // setExchangeRate(data.rates[toCurrency])
@@ -108,7 +113,12 @@ function App() {
             onChangeAmount={handleFromAmountChange}
             amount={fromAmount}
           />
-          <div className="equals"><i className="fa-solid fa-arrow-right-arrow-left"></i></div>
+          <div className="equals">
+            {isLoading ? (<i class="fa-solid fa-spinner spin"></i>) 
+            : (<i className="fa-solid fa-arrow-right-arrow-left"></i>)
+            }
+          </div>
+          
           <CurrencyRow
             className={"secondRow"}
             currencyOptions={currencyOptions}
